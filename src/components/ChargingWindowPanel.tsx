@@ -50,6 +50,17 @@ export function ChargingWindowPanel({
           ))}
         </div>
 
+        <div className="duration-insights" aria-label="Charging calculation details">
+          <div>
+            <span>Interval size</span>
+            <strong>30 min</strong>
+          </div>
+          <div>
+            <span>Intervals used</span>
+            <strong>{hours * 2}</strong>
+          </div>
+        </div>
+
         <button className="primary-action" type="button" onClick={onRefresh}>
           <Search size={18} aria-hidden="true" />
           Find Optimal Window

@@ -230,6 +230,47 @@ function App() {
               onHoursChange={setHours}
               onRefresh={loadChargingWindow}
             />
+
+            <div className="charging-overview-grid" aria-label="Charging summary">
+              <article className="metric-card metric-card--strong">
+                <span className="metric-icon">
+                  <Bolt size={19} aria-hidden="true" />
+                </span>
+                <div>
+                  <p>Selected Duration</p>
+                  <strong>{hours} h</strong>
+                  <span>{hours * 2} half-hour intervals</span>
+                </div>
+              </article>
+
+              <article className="metric-card">
+                <span className="metric-icon">
+                  <CalendarDays size={19} aria-hidden="true" />
+                </span>
+                <div>
+                  <p>Forecast Horizon</p>
+                  <strong>48 h</strong>
+                  <span>Tomorrow and the day after</span>
+                </div>
+              </article>
+
+              <article className="metric-card">
+                <span className="metric-icon">
+                  <Leaf size={19} aria-hidden="true" />
+                </span>
+                <div>
+                  <p>Current Recommendation</p>
+                  <strong>
+                    {chargingResult && !chargingError
+                      ? `${chargingResult.cleanEnergyPercentage.toFixed(2)}%`
+                      : chargingLoading
+                        ? 'Calculating'
+                        : 'Unavailable'}
+                  </strong>
+                  <span>Average clean energy share</span>
+                </div>
+              </article>
+            </div>
           </section>
         )}
       </main>
