@@ -1,0 +1,598 @@
+.app-layout {
+  min-height: 100vh;
+  color: var(--on-background);
+}
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 20;
+  display: flex;
+  width: 260px;
+  flex-direction: column;
+  border-right: 1px solid var(--outline-variant);
+  background: var(--surface);
+  padding: 24px 8px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px 32px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.brand strong,
+.mobile-topbar strong {
+  display: block;
+  color: var(--primary);
+  font-size: 1.12rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.brand span span {
+  color: var(--on-surface-variant);
+  font-size: 0.78rem;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.nav-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 16px;
+  color: var(--on-surface-variant);
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  color: var(--primary);
+  background: var(--surface-container-low);
+}
+
+.nav-item--active {
+  color: var(--primary);
+  background: var(--surface-container-low);
+  box-shadow: inset -4px 0 0 var(--primary);
+}
+
+.mobile-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  border-bottom: 1px solid var(--outline-variant);
+  background: var(--surface);
+  padding: 0 24px;
+}
+
+.mobile-topbar > div {
+  display: flex;
+  gap: 16px;
+  color: var(--on-surface-variant);
+}
+
+.main-canvas {
+  margin-left: 260px;
+  padding: 32px 24px;
+}
+
+.page {
+  width: min(1180px, 100%);
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+  color: var(--primary);
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.14;
+}
+
+.page-header p {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font-size: 1rem;
+}
+
+.secondary-action,
+.primary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border-radius: 8px;
+  border: 0;
+  padding: 0 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.secondary-action {
+  border: 1px solid var(--outline-variant);
+  color: var(--primary);
+  background: var(--surface-card);
+}
+
+.primary-action {
+  width: 100%;
+  color: var(--on-primary);
+  background: var(--primary);
+}
+
+.energy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.energy-card,
+.duration-card,
+.recommendation-card,
+.result-state,
+.error-box,
+.loading-block {
+  border: 1px solid var(--outline-variant);
+  border-radius: 12px;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-soft);
+}
+
+.energy-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.energy-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.energy-card__header h2,
+.panel-title h2 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: 750;
+}
+
+.energy-card__header p,
+.panel-title p,
+.recommendation-top p {
+  margin: 4px 0 0;
+  color: var(--on-surface-variant);
+  font-size: 0.88rem;
+}
+
+.chart-frame {
+  position: relative;
+  height: 212px;
+  margin-bottom: 20px;
+}
+
+.chart-center {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.chart-center span,
+.breakdown-title {
+  color: var(--on-surface-variant);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.chart-center strong {
+  color: var(--secondary);
+  font-size: 1.35rem;
+}
+
+.breakdown-title {
+  margin-top: auto;
+  border-top: 1px solid var(--surface-variant);
+  padding-top: 16px;
+}
+
+.fuel-list {
+  display: grid;
+  gap: 9px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fuel-list li {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  color: var(--on-surface);
+  font-size: 0.86rem;
+}
+
+.fuel-list strong {
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+}
+
+.fuel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.page--charging {
+  width: min(1040px, 100%);
+}
+
+.charging-panel {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.6fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.duration-card,
+.recommendation-card {
+  padding: 24px;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.icon-badge {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--on-secondary-container);
+  background: var(--secondary-container);
+}
+
+.duration-value {
+  width: max-content;
+  margin: 0 0 18px auto;
+  border-radius: 999px;
+  background: var(--surface-container-high);
+  padding: 5px 12px;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.duration-slider {
+  width: 100%;
+  accent-color: var(--primary);
+}
+
+.duration-scale {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 28px;
+  color: var(--on-surface-variant);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.result-state,
+.error-box,
+.loading-block {
+  display: grid;
+  min-height: 160px;
+  place-items: center;
+  padding: 24px;
+  color: var(--on-surface-variant);
+}
+
+.result-state {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.error-box {
+  color: var(--error);
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+.recommendation-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.recommendation-card::after {
+  position: absolute;
+  top: -80px;
+  right: -64px;
+  width: 240px;
+  height: 240px;
+  border-radius: 999px;
+  background: var(--secondary-container);
+  content: '';
+  filter: blur(40px);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.recommendation-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.recommendation-top > span {
+  border-radius: 999px;
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.recommendation-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+  font-size: 1.15rem;
+  font-weight: 780;
+}
+
+.window-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 0 28px;
+}
+
+.window-grid > div {
+  border: 1px solid rgba(198, 198, 205, 0.55);
+  border-radius: 8px;
+  background: var(--surface-container-low);
+  padding: 16px;
+}
+
+.window-grid dt {
+  color: var(--on-surface-variant);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.window-grid dd {
+  margin: 4px 0 0;
+  color: var(--primary);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.timeline {
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-labels,
+.timeline-legend {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--on-surface-variant);
+  font-size: 0.8rem;
+}
+
+.timeline-bar {
+  display: flex;
+  height: 16px;
+  overflow: hidden;
+  border-radius: 999px;
+  margin: 10px 0 12px;
+  background: var(--surface-container-high);
+}
+
+.timeline-bar span {
+  display: block;
+  height: 100%;
+}
+
+.timeline-muted {
+  width: 25%;
+  background: rgba(86, 94, 116, 0.3);
+}
+
+.timeline-mixed {
+  flex: 1;
+  background: rgba(86, 94, 116, 0.5);
+}
+
+.timeline-active {
+  width: 22%;
+  background: var(--secondary);
+}
+
+.timeline-legend {
+  justify-content: center;
+}
+
+.timeline-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timeline-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend-clean {
+  background: var(--secondary);
+}
+
+.legend-muted {
+  background: rgba(86, 94, 116, 0.5);
+}
+
+.bottom-nav {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 40;
+  display: none;
+  justify-content: space-around;
+  border-top: 1px solid var(--outline-variant);
+  background: var(--surface);
+  padding: 8px 16px;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.bottom-nav .nav-item {
+  width: auto;
+  min-height: 50px;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 16px;
+  font-size: 0.72rem;
+}
+
+.bottom-nav .nav-item--active {
+  color: var(--on-secondary-container);
+  background: var(--secondary-container);
+  box-shadow: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1100px) {
+  .energy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .charging-panel {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+
+  .mobile-topbar,
+  .bottom-nav {
+    display: flex;
+  }
+
+  .main-canvas {
+    margin-left: 0;
+    padding: 24px 24px 88px;
+  }
+
+  .page {
+    width: min(430px, 100%);
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: 24px;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .page-header .secondary-action {
+    display: none;
+  }
+
+  .chart-frame {
+    height: 220px;
+  }
+
+  .energy-card {
+    padding: 24px;
+  }
+
+  .recommendation-top,
+  .window-grid,
+  .timeline-labels,
+  .timeline-legend {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .recommendation-top > span {
+    width: max-content;
+  }
+
+  .window-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
