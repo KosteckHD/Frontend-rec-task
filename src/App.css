@@ -776,7 +776,7 @@
   }
 
   .duration-insights {
-    margin-bottom: 16px;
+    display: none;
   }
 
   .recommendation-top,
