@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
-import { BarChart3, Bell, Bolt, RefreshCw, UserCircle, Zap } from 'lucide-react'
+import {
+  BarChart3,
+  Bell,
+  Bolt,
+  CalendarDays,
+  Leaf,
+  RefreshCw,
+  UserCircle,
+  Zap,
+} from 'lucide-react'
 import { fetchBestChargingWindow, fetchDailyEnergyMix } from './api/energyApi'
 import './App.css'
 import { ChargingWindowPanel } from './components/ChargingWindowPanel'
@@ -20,6 +29,22 @@ function App() {
     useState<ChargingWindowResult | null>(null)
   const [chargingLoading, setChargingLoading] = useState(true)
   const [chargingError, setChargingError] = useState<string | null>(null)
+  const cleanestDay = energyMix.reduce<DailyEnergyMix | null>(
+    (bestDay, day) =>
+      !bestDay || day.cleanEnergyPercentage > bestDay.cleanEnergyPercentage
+        ? day
+        : bestDay,
+    null,
+  )
+  const averageCleanEnergy =
+    energyMix.length > 0
+      ? energyMix.reduce((total, day) => total + day.cleanEnergyPercentage, 0) /
+        energyMix.length
+      : null
+  const totalIntervals = energyMix.reduce(
+    (total, day) => total + day.intervalCount,
+    0,
+  )
 
   const loadEnergyMix = useCallback(async () => {
     setMixLoading(true)
@@ -127,15 +152,65 @@ function App() {
             {mixLoading && <div className="loading-block">Loading generation data</div>}
             {!mixLoading && mixError && <div className="error-box">{mixError}</div>}
             {!mixLoading && !mixError && (
-              <div className="energy-grid">
-                {energyMix.map((day, index) => (
-                  <EnergyPieChart
-                    key={day.date}
-                    day={day}
-                    label={ENERGY_LABELS[index] ?? day.date}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="overview-grid" aria-label="Energy mix summary">
+                  <article className="metric-card metric-card--strong">
+                    <span className="metric-icon">
+                      <Leaf size={19} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p>Cleanest Day</p>
+                      <strong>
+                        {cleanestDay
+                          ? ENERGY_LABELS[energyMix.indexOf(cleanestDay)] ??
+                            cleanestDay.date
+                          : 'No data'}
+                      </strong>
+                      <span>
+                        {cleanestDay
+                          ? `${cleanestDay.cleanEnergyPercentage.toFixed(2)}% clean`
+                          : 'Waiting for forecast'}
+                      </span>
+                    </div>
+                  </article>
+
+                  <article className="metric-card">
+                    <span className="metric-icon">
+                      <BarChart3 size={19} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p>Average Clean Share</p>
+                      <strong>
+                        {averageCleanEnergy
+                          ? `${averageCleanEnergy.toFixed(2)}%`
+                          : 'No data'}
+                      </strong>
+                      <span>Across the displayed forecast</span>
+                    </div>
+                  </article>
+
+                  <article className="metric-card">
+                    <span className="metric-icon">
+                      <CalendarDays size={19} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p>Data Coverage</p>
+                      <strong>{totalIntervals} intervals</strong>
+                      <span>Half-hour generation samples</span>
+                    </div>
+                  </article>
+                </div>
+
+                <div className="energy-grid">
+                  {energyMix.map((day, index) => (
+                    <EnergyPieChart
+                      key={day.date}
+                      day={day}
+                      label={ENERGY_LABELS[index] ?? day.date}
+                    />
+                  ))}
+                </div>
+              </>
             )}
           </section>
         ) : (
