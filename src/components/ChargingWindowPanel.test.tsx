@@ -23,7 +23,7 @@ describe('ChargingWindowPanel', () => {
     )
 
     expect(screen.getByRole('heading', { name: 'Duration' })).toBeInTheDocument()
-    expect(screen.getByText('3 h')).toBeInTheDocument()
+    expect(screen.getAllByText('3 h')).toHaveLength(2)
     expect(screen.getByText('Recommended Window')).toBeInTheDocument()
     expect(screen.getByText('89.00% Clean Energy')).toBeInTheDocument()
     expect(screen.getByText('13 Jun 2026, 11:30')).toBeInTheDocument()
